@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 
 type BoardProps = {
-
-    //TODO perchè non è un numero normale?
     setMoves: React.Dispatch<React.SetStateAction<number>>
     setScore: React.Dispatch<React.SetStateAction<number>>
     finishGameCallback: () => void
@@ -47,7 +45,6 @@ function Board(boardProps: BoardProps) {
         }, 500);
     }
 
-    //Vado nell'if se ho già cliccato una carta in precedenza (aggiungo un elemento a openCards) altrimenti lo inizializzo con la carta cliccata
     const handleCardClick = (id: number) => {
         if (openCards.length === 1) {
             setOpenCards((prev) => [...prev, id]);
@@ -59,6 +56,10 @@ function Board(boardProps: BoardProps) {
             setOpenCards([id]);
         }
     }
+    
+    useEffect(() => {
+        checkGameOver();
+    }, [clearedCards]);
 
     useEffect(() => {
         let timeout: NodeJS.Timeout = setTimeout(() => {});
@@ -69,10 +70,6 @@ function Board(boardProps: BoardProps) {
             clearTimeout(timeout);
         };
     }, [openCards]);
-
-    useEffect(() => {
-        checkGameOver();
-    }, [clearedCards]);
 
     const checkIsFlipped = (id: number) => {
         return clearedCards.includes(id) || openCards.includes(id);
@@ -91,7 +88,7 @@ function Board(boardProps: BoardProps) {
                     img={`/img/${ index % 8 + 1 }.png`}
                     isInactive={checkIsInactive(index)}
                     isFlipped={checkIsFlipped(index)}
-                    isDisable={shouldDisableAllCards}
+                    isDisabled={shouldDisableAllCards}
                     onClick={handleCardClick}
                 />
             })}
