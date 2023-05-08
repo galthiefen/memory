@@ -5,6 +5,7 @@ type BoardProps = {
 
     //TODO perchè non è un numero normale?
     setMoves: React.Dispatch<React.SetStateAction<number>>
+    setScore: React.Dispatch<React.SetStateAction<number>>
     finishGameCallback: () => void
     cardIds: Array<number>
 }
@@ -36,9 +37,11 @@ function Board(boardProps: BoardProps) {
         if ((firstCard % 8 + 1) === (secondCard % 8 + 1)) {
             setClearedCards((prev) => [...prev, firstCard, secondCard]);
             setOpenCards([]);
+            boardProps.setScore((score) => score + 10)
             return;
         }
 
+        boardProps.setScore((score) => score - 5)
         timeout.current = setTimeout(() => {
             setOpenCards([]);
         }, 500);

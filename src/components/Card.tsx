@@ -35,5 +35,4 @@ function Card(cardProps: CardProps) {
   )
 }
 
-
 export default Card

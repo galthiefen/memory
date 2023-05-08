@@ -1,5 +1,6 @@
 type ScoreProps = {
     moves: number
+    score: number
     bestScore: number
 }
 
@@ -9,6 +10,9 @@ function Score(props: ScoreProps) {
             <div className="score">
                 <div>
                     <span>Mosse: </span> {props.moves}
+                </div>
+                <div>
+                    <span>Score: </span> {props.score}
                 </div>
                 {localStorage.getItem('bestScore') && (
                     <div>

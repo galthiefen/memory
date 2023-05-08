@@ -8,7 +8,7 @@ cardIds.sort(() => 0.5 - Math.random())
 
 function App() {
 
-  // const [cardIds] = useState<Array<number>>
+  const [score, setScore] = useState<number>(0)
   const [moves, setMoves] = useState<number>(0)
   const [bestScore, setBestScore] = useState<number>(
     parseInt(localStorage.getItem('bestScore') || '0')
@@ -23,10 +23,12 @@ function App() {
     <div className="app-container">
       <Score
         moves={moves}
+        score={score}
         bestScore={bestScore}
       />
       <Board
         setMoves={setMoves}
+        setScore={setScore}
         finishGameCallback={finishGameCallback}
         cardIds={cardIds}
       />
