@@ -14,9 +14,9 @@ function App() {
     parseInt(localStorage.getItem('bestScore') || '0')
   )
   const finishGameCallback = () => {
-    const newBestScore = moves < bestScore ? moves : bestScore
+    const newBestScore = score < bestScore || bestScore === 0 ? score : bestScore
     setBestScore(newBestScore)
-    localStorage.setItem('bestScore', '' + newBestScore)
+    localStorage.setItem('bestScore', newBestScore.toString())
   }
 
   return (
@@ -33,7 +33,7 @@ function App() {
         cardIds={cardIds}
       />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

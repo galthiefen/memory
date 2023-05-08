@@ -5,7 +5,7 @@ type CardProps = {
   img: string,
   isInactive: boolean,  //carta a faccia in giù
   isFlipped: boolean,   //carta a faccia in su
-  isDisable: boolean,   //carta indovinata
+  isDisabled: boolean,   //carta indovinata
   onClick: (id: number) => void
 }
 
@@ -14,15 +14,12 @@ function Card(cardProps: CardProps) {
   const backSide = '/img/backSide.png'
 
   const handleClick = () => {
-    !cardProps.isFlipped && !cardProps.isDisable && cardProps.onClick(cardProps.id)
+    !cardProps.isFlipped && !cardProps.isDisabled && cardProps.onClick(cardProps.id)
   }
 
   return (
     <div
-      className={classNames('card', {
-        'card-is-flipped': cardProps.isFlipped,
-        'card-is-inactive': cardProps.isInactive
-      })}
+      className={classNames("card", {"card-is-flipped": cardProps.isFlipped})}
       onClick={handleClick}
     >
       <div className="card card-face">
