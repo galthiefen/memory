@@ -42,7 +42,6 @@ function Board(boardProps: BoardProps) {
 
         boardProps.setScore((score) => score - 5)
         setErrors((prevError) => prevError + 1)
-        console.log('ERRORS: ' + errors)
         if (errors === 5) {
             boardProps.finishGameCallback();
         }
