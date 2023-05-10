@@ -11,17 +11,8 @@ type BoardProps = {
 function Board(boardProps: BoardProps) {
     const [openCards, setOpenCards] = useState<Array<number>>([])
     const [clearedCards, setClearedCards] = useState<Array<number>>([])
-    const [shouldDisableAllCards, setShouldDisableAllCards] = useState<boolean>(false)
     const [errors, setErrors] = useState<number>(0)
     const timeout = useRef<NodeJS.Timeout>(setTimeout(() => {}))
-
-    const disable = () => {
-        setShouldDisableAllCards(true);
-    }
-
-    const enable = () => {
-        setShouldDisableAllCards(false);
-    }
 
     const checkGameOver = () => {
         if (clearedCards.length === boardProps.cardIds.length) {
@@ -31,7 +22,6 @@ function Board(boardProps: BoardProps) {
 
     const evaluate = () => {
         const [firstCard, secondCard] = openCards;
-        enable();
 
         if ((firstCard % 8 + 1) === (secondCard % 8 + 1)) {
             setClearedCards((prev) => [...prev, firstCard, secondCard]);
@@ -42,9 +32,12 @@ function Board(boardProps: BoardProps) {
 
         boardProps.setScore((score) => score - 5)
         setErrors((prevError) => prevError + 1)
-        if (errors === 5) {
-            boardProps.finishGameCallback();
-        }
+        
+        //TODO should call another callback or this callback should be different
+        // if (errors === 5) {
+        //     boardProps.finishGameCallback();
+        // }
+
         timeout.current = setTimeout(() => {
             setOpenCards([]);
         }, 500);
@@ -54,7 +47,6 @@ function Board(boardProps: BoardProps) {
         if (openCards.length === 1) {
             setOpenCards((prev) => [...prev, id]);
             boardProps.setMoves((moves) => moves + 1);
-            disable();
         }
         else {
             clearTimeout(timeout.current);
@@ -93,7 +85,6 @@ function Board(boardProps: BoardProps) {
                     img={`/img/${ index % 8 + 1 }.png`}
                     isInactive={checkIsInactive(index)}
                     isFlipped={checkIsFlipped(index)}
-                    isDisabled={shouldDisableAllCards}
                     onClick={handleCardClick}
                 />
             })}

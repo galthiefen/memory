@@ -3,9 +3,8 @@ import classNames from "classnames"
 type CardProps = {
   id: number,
   img: string,
-  isInactive: boolean,  //carta a faccia in giù
+  isInactive: boolean,  //carta indovinata
   isFlipped: boolean,   //carta a faccia in su
-  isDisabled: boolean,   //carta indovinata
   onClick: (id: number) => void
 }
 
@@ -14,7 +13,7 @@ function Card(cardProps: CardProps) {
   const backSide = '/img/backSide.png'
 
   const handleClick = () => {
-    !cardProps.isFlipped && !cardProps.isDisabled && cardProps.onClick(cardProps.id)
+    !cardProps.isFlipped && !cardProps.isInactive && cardProps.onClick(cardProps.id)
   }
 
   return (
