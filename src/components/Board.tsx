@@ -12,6 +12,7 @@ function Board(boardProps: BoardProps) {
     const [openCards, setOpenCards] = useState<Array<number>>([])
     const [clearedCards, setClearedCards] = useState<Array<number>>([])
     const [shouldDisableAllCards, setShouldDisableAllCards] = useState<boolean>(false)
+    const [errors, setErrors] = useState<number>(0)
     const timeout = useRef<NodeJS.Timeout>(setTimeout(() => {}))
 
     const disable = () => {
@@ -40,6 +41,11 @@ function Board(boardProps: BoardProps) {
         }
 
         boardProps.setScore((score) => score - 5)
+        setErrors((prevError) => prevError + 1)
+        console.log('ERRORS: ' + errors)
+        if (errors === 5) {
+            boardProps.finishGameCallback();
+        }
         timeout.current = setTimeout(() => {
             setOpenCards([]);
         }, 500);
